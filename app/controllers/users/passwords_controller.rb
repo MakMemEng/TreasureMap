@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Admins::PasswordsController < Devise::PasswordsController
+class Users::PasswordsController < Devise::PasswordsController
+  before_action :check_guest, only: :create
+
   # GET /resource/password/new
   # def new
   #   super
