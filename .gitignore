@@ -40,3 +40,5 @@ yarn-debug.log*
 /db/seeds.rb
 
 EC_diagram.dio
+
+a.html
