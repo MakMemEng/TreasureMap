@@ -1,12 +1,5 @@
-<section class="hero is-success">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        アファメーター 一覧
-      </h1>
-    </div>
-  </div>
-</section>
+<% provide(:title, "アファメーター 一覧") %>
+<%= render 'shared/header_title' %>
 
 <section class="section">
   <div class="container">
@@ -38,4 +31,6 @@
       <% end %>
     </div>
   </div>
+  <%= link_to_prev_page @users, '前のページ' %>
+  <%= link_to_next_page @users, '次のページ' %>
 </section>

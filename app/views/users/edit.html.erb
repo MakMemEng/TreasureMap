@@ -1,12 +1,5 @@
-<section class="hero is-success">
-  <div class="hero-body">
-    <div class="container">
-      <h1 class="title">
-        ユーザー編集
-      </h1>
-    </div>
-  </div>
-</section>
+<% provide(:title, "ユーザー編集") %>
+<%= render 'shared/header_title' %>
 
 <% if @user.errors.any? %>
   <div class="notification is-danger">
