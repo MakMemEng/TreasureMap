@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_054313) do
+ActiveRecord::Schema.define(version: 2021_10_29_030202) do
 
   create_table "affirmations", charset: "utf8", force: :cascade do |t|
-    t.integer "user_id"
     t.string "title"
     t.text "body"
     t.string "image_id"
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_affirmations_on_user_id"
   end
 
   create_table "comments", charset: "utf8", force: :cascade do |t|
@@ -29,6 +30,16 @@ ActiveRecord::Schema.define(version: 2021_10_27_054313) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["affirmation_id"], name: "index_comments_on_affirmation_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "maps", charset: "utf8", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "user_id"
+    t.bigint "affirmation_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["affirmation_id"], name: "index_maps_on_affirmation_id"
+    t.index ["user_id"], name: "index_maps_on_user_id"
   end
 
   create_table "users", charset: "utf8", force: :cascade do |t|
@@ -47,6 +58,9 @@ ActiveRecord::Schema.define(version: 2021_10_27_054313) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "affirmations", "users"
   add_foreign_key "comments", "affirmations"
   add_foreign_key "comments", "users"
+  add_foreign_key "maps", "affirmations"
+  add_foreign_key "maps", "users"
 end

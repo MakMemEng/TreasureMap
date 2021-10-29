@@ -1,7 +1,7 @@
 class AffirmationsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
   def index
-    @affirmations = Affirmation.includes(:user).order(id: "DESC")
+    @affirmations = Affirmation.includes(:user).order(id: "DESC").page(params[:page]).per(1)
   end
 
   def show
@@ -13,8 +13,7 @@ class AffirmationsController < ApplicationController
   end
 
   def create
-    @affirmation = Affirmation.new(affirmation_params)
-    @affirmation.user_id = current_user.affirmations.build(affirmation_params)
+    @affirmation = current_user.affirmations.build(affirmation_params)
     if @affirmation.save
       redirect_to affirmation_path(@affirmation), notice: '投稿に成功しました。'
     else
