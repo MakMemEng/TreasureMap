@@ -38,3 +38,5 @@ yarn-debug.log*
 /environments/db.env
 .DS_Store
 /db/seeds.rb
+
+EC_diagram.dio
