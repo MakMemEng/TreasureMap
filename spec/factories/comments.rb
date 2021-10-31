@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    comment { "MyText" }
+    association :affirmation
+    user { affirmation.user }
+    comment { "MyComment" }
   end
 end

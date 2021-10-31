@@ -97,4 +97,20 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '削除依存性の検証' do
+    let(:user) { create(:user) }
+    let(:other_user) { create(:user) }
+
+    it '削除すると紐づく投稿も削除されること' do
+      create(:affirmation, user: user)
+      expect { user.destroy }.to change(user.affirmations, :count).by(-1)
+    end
+
+#    it '削除すると紐づくコメントも削除されること' do
+#      create(:comment, user: user)
+#      expect { user.destroy }.to change(user.comments, :count).by(-1)
+#    end
+
+  end
+
 end
