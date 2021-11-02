@@ -25,6 +25,17 @@
                   <%= link_to "編集", edit_user_path(@user), class: "button is-primary" %>
                 </td>
                 <% end %>
+                <% if current_user.admin? %>
+                <td class="is-size-4">
+                  <%= @user.email %>
+                </td>
+                <td>
+                  <%= link_to "編集", edit_user_path(@user), class: "button is-primary" %>
+                </td>
+                <td>
+                  <%= link_to "ユーザー情報削除", @user, class: "button is-primary", method: :delete, data: { confirm: "本当に削除しますか？" } %>
+                </td>
+                <% end %>
               </tr>
             </table>
 

@@ -10,8 +10,10 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    if @user != current_user
-      redirect_to users_path, alert: '不正なアクセスです。'
+    if !current_user.admin?
+      if @user != current_user
+        redirect_to users_path, alert: '不正なアクセスです。'
+      end
     end
   end
 
@@ -22,6 +24,12 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "ユーザー情報を削除しました。"
+    redirect_to users_path
   end
 
   private
