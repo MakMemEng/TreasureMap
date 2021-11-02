@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:index]
+  before_action :ensure_normal_user, only: %i[update destroy]
   def index
     @users = User.page(params[:page]).per(20)
   end
@@ -30,6 +31,12 @@ class UsersController < ApplicationController
     User.find(params[:id]).destroy
     flash[:success] = "ユーザー情報を削除しました。"
     redirect_to users_path
+  end
+
+  def ensure_normal_user
+    if params[:user][:email].downcase == 'guest@example.com'
+      redirect_to root_path, alert: 'ゲストユーザーの更新・削除はできません。'
+    end
   end
 
   private
