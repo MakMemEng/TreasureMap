@@ -37,6 +37,11 @@ jobs:
           name: Databese setup
           command: bundle exec rake db:migrate
       - run:
+          name: yarn Install
+          command: yarn install
+      - run: bundle exec bin/webpack
+
+      - run:
           name: RSpec
           command: |
             mkdir /tmp/test-results
