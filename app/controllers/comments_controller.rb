@@ -21,4 +21,5 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:comment, :affirmation_id)
+  end
 end
