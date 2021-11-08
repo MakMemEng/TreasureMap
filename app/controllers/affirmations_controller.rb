@@ -28,6 +28,10 @@ class AffirmationsController < ApplicationController
     end
   end
 
+  def map
+    
+  end
+
   def update
     @affirmation = Affirmation.find(params[:id])
     if @affirmation.update(affirmation_params)
