@@ -64,9 +64,7 @@ jobs:
           MYSQL_USER: user_name
     steps:
       - checkout
-      - run:
-          name: Build docker image
-          command: docker build --rm=false -t registry.heroku.com/${HEROKU_APP_NAME}/web .
+
       - run:
           name: Execute Heroku maintenance on
           command: heroku maintenance:on --app ${HEROKU_APP_NAME}
