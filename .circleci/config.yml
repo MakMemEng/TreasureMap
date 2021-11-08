@@ -53,6 +53,34 @@ jobs:
               --format progress \
               $TEST_FILES
 
+  deploy:
+    docker:
+      - image: circleci/ruby:2.7.2-node-browsers
+      - image: circleci/mysql:5.7
+      - image: buildpack-deps:trusty
+        environment:
+          MYSQL_PASSWORD: user_password
+          MYSQL_DATABASE: webapp_production
+          MYSQL_USER: user_name
+    steps:
+      - checkout
+      - run:
+          name: Build docker image
+          command: docker build --rm=false -t registry.heroku.com/${HEROKU_APP_NAME}/web .
+      - run:
+          name: Execute Heroku maintenance on
+          command: heroku maintenance:on --app ${HEROKU_APP_NAME}
+      - run:
+          name: Heroku への main のデプロイ
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git main
+      - run:
+          name: Execute Heroku db migrate
+          command: heroku run rails db:migrate --app ${HEROKU_APP_NAME}
+      - run:
+          name: Execut Heroku maintenance off
+          command: heroku maintenance:off --app ${HEROKU_APP_NAME}
+
 workflows:
   version: 2
   build_and_test:
@@ -61,3 +89,13 @@ workflows:
       - test:
           requires:
             - build
+
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
