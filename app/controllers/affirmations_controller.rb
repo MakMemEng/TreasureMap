@@ -1,5 +1,6 @@
 class AffirmationsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
+
   def index
     @affirmations = Affirmation.includes(:user).order(id: "DESC").page(params[:page]).per(25)
   end
