@@ -18,3 +18,10 @@ test:
   password: <%= ENV.fetch('MYSQL_PASSWORD') { 'user_password' } %>
   database: webapp_test
   host: <%= ENV.fetch('APP_DATABASE_HOST') { 'db' } %>
+
+production:
+  <<: *default
+  database: webapp_production
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
