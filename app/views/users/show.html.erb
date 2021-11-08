@@ -67,34 +67,25 @@
               </figure>
             </div>
             <div class="card-content">
-              <div class="media">
-                <div class="media-content">
-                  <%= link_to affirmation_path(affirmation), class: "panel-block" do %>
-                    <span class="panel-icon">
-                      <i class="fas fa-book" aria-hidden="true"></i>
-                    </span>
-                    このアファメーションを見る
-                  <% end %>
-                  <% if @user.id == current_user.id %>
-                    <%= link_to edit_affirmation_path(affirmation), class: "panel-block" do %>
-                      <span class="panel-icon">
-                        <i class="fas fa-edit"></i>
-                      </span>
-                      このアファメーションを編集する
-                    <% end %>
-                    <%= link_to affirmation_path(affirmation), method: :delete, data: {confirm: "削除しますか？"}, class: "panel-block" do %>
-                      <span class="panel-icon">
-                        <i class="fas fa-trash"></i>
-                      </span>
-                      このアファメーションを削除する
-                    <% end %>
-                  <% end %>
-                </div>
-              </div>
-              <div class="content">
-                <time><%= affirmation.updated_at.strftime("%Y-%m-%d %H:%M") %></time>更新
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4"><%= @user.affirmations.first.title %></p>
               </div>
             </div>
+            <div class="content">
+              <table class="table is-narrow">
+                <tr>
+                  <th>アファメーション</th>
+                </tr>
+                <tr>
+                  <td><%= simple_format @user.affirmations.first.body %></td>
+                </tr>
+              </table>
+            </div>
+            <div class="content">
+              <time><%= @user.affirmations.first.updated_at.strftime("%Y-%m-%d %H:%M") %></time>更新
+            </div>
+          </div>
           </div>
         </div>
       <% end %>

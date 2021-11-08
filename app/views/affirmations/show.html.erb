@@ -28,7 +28,11 @@
               </table>
               <% if @affirmation.user.id == current_user.id %>
                 <%= link_to "編集画面へ", edit_affirmation_path(@affirmation), class: "button is-success" %>
+                <%= link_to "削除", affirmation_path(@affirmation), method: :delete, data: {confirm: "削除しますか？"}, class: "button is-success" %>
               <% end %>
+            </div>
+            <div class="content">
+              <time><%= @affirmation.updated_at.strftime("%Y-%m-%d %H:%M") %></time>更新
             </div>
           </div>
         </div>
