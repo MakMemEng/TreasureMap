@@ -6,11 +6,14 @@ class User < ApplicationRecord
   attachment :profile_image
   has_many :affirmations, dependent: :destroy
   has_many :comments, dependent: :destroy
-  validates :username,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }
   validates :profile,  length: { maximum: 300 }
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  with_options presence: true do
+    validates :username, length: { maximum: 50 }
+    validates :email,    length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }
+    validates :password, length: { minimum: 6 }, allow_nil: true
+  end
 
   def self.guest
 		find_or_create_by!(username: 'Guest_User',email: 'guest@example.com') do |user|

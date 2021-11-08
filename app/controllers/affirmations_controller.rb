@@ -1,7 +1,8 @@
 class AffirmationsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
+
   def index
-    @affirmations = Affirmation.includes(:user).order(id: "DESC").page(params[:page]).per(1)
+    @affirmations = Affirmation.includes(:user).order(id: "DESC").page(params[:page]).per(25)
   end
 
   def show
@@ -26,10 +27,6 @@ class AffirmationsController < ApplicationController
     if @affirmation.user != current_user
       redirect_to affirmations_path, alert: '不正なアクセスです。'
     end
-  end
-
-  def map
-    
   end
 
   def update
